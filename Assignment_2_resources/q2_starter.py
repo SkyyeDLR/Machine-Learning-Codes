@@ -20,24 +20,24 @@ print(f"Test set size: {len(X_test)}")
 
 # 3. Define the kNN algorithm
 def euclidean_distance(instance1, instance2):
-    """Calculate the Euclidean distance between two instances."""
-    # write your code here
+    return math.sqrt(sum((instance2 - instance1)** 2))
 
 def get_neighbors(X_train, test_instance, k):
-    """Get the k nearest neighbors for a test instance."""
     distances = []
     neighbors = []
 
-    # write your code here
-    
+    for i, point in enumerate(X_train):
+        distanceVal = euclidean_distance(point, test_instance)
+        distances.append((distanceVal, i, point))
+
+    neighbors = [item for item in sorted(distances)[:k]]
     return neighbors
 
 def get_response(neighbors, y_train):
-    """Determine the class label for a current instance based on the majority 
-    class label of its k neighbors."""
     prediction = None
 
-    # write your code here
+    class_labels = [y_train[neighbor[1]] for neighbor in neighbors]
+    prediction = Counter(class_labels).most_common(1)[0][0]
 
     return prediction
 
